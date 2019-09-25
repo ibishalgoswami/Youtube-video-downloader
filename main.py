@@ -1,29 +1,33 @@
 import pytube
 try:
     link = input('Enter the video link here-->')
+    link=link.strip()
     yt = pytube.YouTube(link)
 except:
     print("The link you have provided is not correct.")
     exit()
+
+lis = []
+stream = stream = yt.streams.filter(adaptive=True).filter(file_extension='mp4').all()
+
+for i in stream:
+    lis.append(i.resolution)
+print("Available resolution")
+print('Select one from here', lis, '\n')
+x = input("Enter your selected Resoution").strip()
+
+for j in lis:
+    if x in j:
+        # print("Resolution is available")
+        break
+else:
+    print("Sorry,selected resolution is not available")
+    exit()
+
+confirm = input("Do you want to download this video?Y/N")
 try:
     path = input('Enter the path where you want to save this file')
-
-    lis = []
-    stream = stream = yt.streams.filter(adaptive=True).filter(file_extension='mp4').all()
-    for i in stream:
-        lis.append(i.resolution)
-    print("Available resolution")
-    print('Select one from here', lis, '\n')
-    x = input("Enter your selected Resoution")
-    for j in lis:
-        if x in j:
-            # print("Resolution is available")
-            break
-    else:
-        print("Sorry,selected resolution is not available")
-        exit()
-
-    confirm = input("Do you want to download this video?Y/N")
+    path = path.strip()
 
     if confirm == 'Y' or confirm == 'y':
 
@@ -52,5 +56,6 @@ try:
     else:
         exit()
     print("Video Downloaded successfully")
+
 except:
     print("The path you have provided seems not correct")
