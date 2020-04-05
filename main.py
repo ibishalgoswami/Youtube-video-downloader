@@ -1,8 +1,8 @@
-import pytube
+from pytube import YouTube
 try:
     link = input('Enter the video link here-->')
     link = link.strip()
-    yt = pytube.YouTube(link)
+    yt = YouTube(link)
 except:
     print("The link you have provided is not correct.")
     exit()
@@ -10,7 +10,7 @@ except:
 lis = []
 vderaud = input("Want to download as a video or audio file??")
 if vderaud == 'video' or vderaud == 'Video':
-    stream = yt.streams.filter(adaptive=True).filter(file_extension='mp4').all()
+    stream = yt.streams.filter(progressive=True)
 
     for i in stream:
         lis.append(i.resolution)
@@ -64,7 +64,7 @@ if vderaud == 'video' or vderaud == 'Video':
 
 elif vderaud == 'audio' or vderaud == 'Audio':
 
-    stream = yt.streams.filter(only_audio=True).filter(mime_type="audio/webm").all()
+    stream = yt.streams.filter(only_audio=True).filter(mime_type="audio/webm")
     for i in stream:
         lis.append(i.abr)
     print("Available Average bitrate")
@@ -108,4 +108,3 @@ elif vderaud == 'audio' or vderaud == 'Audio':
 
     except:
         print("The path you have provided seems not correct")
-
